@@ -32,3 +32,23 @@ describe("GET/api/tasks/:user_id/tasks", () => {
       });
   });
 });
+
+describe("get/api/task/:task id", () =>{
+  test("status 200 - returns an task object correctly based on the task id ", () => {
+      return request(app)
+          .get('/api/tasks/2')
+          .expect(200)
+          .then(({ body }) => {
+              const { task } = body;
+              expect(task).toBeInstanceOf(Object);
+              expect(task).toMatchObject({
+              
+              name: "map journey",
+              description: "planning ",
+              status: "To-do",
+              user_id: 1,
+          })
+  
+              })
+          })
+          })

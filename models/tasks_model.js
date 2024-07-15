@@ -4,7 +4,7 @@ const db = require("../db/connection");
 
 
 exports.selectTasks = (user_id) => {
-    console.log(user_id)
+ 
     const queryString = `SELECT * FROM tasks
     WHERE user_id = $1;`
     return db.query(queryString, [user_id])
@@ -37,4 +37,25 @@ exports.checkUserExists= (username)=>{
             return true;
         }
     })
+};
+
+exports.selectTasksById = (id ) => {
+
+    return db.query (  `
+    SELECT * FROM tasks 
+    WHERE task_id = $1;`, [id])
+         .then((result) => {
+            console.log(result)
+           if (result.rows.length === 0) {
+             return Promise.reject({
+               status: 404,
+               msg: "Task can't be found",
+             })
+           } else {
+             
+             return result.rows[0];
+           
+           }
+         
+         });
 }

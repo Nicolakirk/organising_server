@@ -1,5 +1,5 @@
 
-const { selectTasks, checkUserIdExists } = require("../models/tasks_model");
+const { selectTasks, checkUserIdExists, selectTasksById } = require("../models/tasks_model");
 
 
 
@@ -15,3 +15,14 @@ exports.getTasks = (req,res, next) =>{
         next (err);
     })
 };
+
+exports.getTasksById = (req, res, next) =>{
+    const { task_id } = req.params;
+    
+      selectTasksById(task_id).then((task) => {
+            res.status(200).send({ task });
+          })
+          .catch((err)=>{
+            next( err);
+          });
+        };
